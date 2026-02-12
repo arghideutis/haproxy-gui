@@ -6,7 +6,7 @@ services:
     build: .
     command: gunicorn --bind 0.0.0.0:8000 app:app --workers 3
     volumes:
-      # - ./:/app
+      # - ./:/app # uncomment for development to enable live code reloading
       # Mount host auth files so PAM inside the container can validate host accounts.
       # WARNING: this exposes sensitive host files to the container. Use with extreme caution.
       - /etc/passwd:/etc/passwd:ro
@@ -14,7 +14,7 @@ services:
       - /etc/shadow:/etc/shadow:ro
       - /etc/pam.d:/etc/pam.d:ro
       - /etc/nsswitch.conf:/etc/nsswitch.conf:ro
-      - /etc/haproxy/haproxy.cfg:/app/haproxy.cfg
+      - /etc/haproxy/haproxy.cfg:/app/haproxy.cfg # Mount a default HAProxy config for testing. Remove or replace with a custom config as needed.
     expose:
       - "8000"
     environment:

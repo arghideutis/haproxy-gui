@@ -125,7 +125,7 @@ function renderGraph(graph) {
   const firstFrontend = graph.nodes.find(n => n.type === 'frontend');
   if (firstFrontend) {
     setTimeout(() => {
-      mainNetwork.focus(firstFrontend.id, { scale: 1.0, offset: { x: -250, y: -250 }, animation: { duration: 500 } });
+      mainNetwork.focus(firstFrontend.id, { scale: 1.0, offset: { x: -100, y: -250 }, animation: { duration: 500 } });
     }, 250);
   }
 
