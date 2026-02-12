@@ -26,11 +26,15 @@ def config():
     if not _check_request_auth(request):
         return _unauthorized()
     if request.method == 'GET':
-        if not os.path.exists(CONFIG_PATH):
-            # open(CONFIG_PATH, 'w').close()
-            return jsonify()
-        with open(CONFIG_PATH, 'r') as f:
-            return jsonify({'config': f.read()})
+        # if not os.path.exists(CONFIG_PATH):
+        #     # open(CONFIG_PATH, 'w').close()
+        #     return jsonify()
+        try:
+            with open(CONFIG_PATH, 'r') as f:
+                return jsonify({'config': f.read()})
+        except Exception as e:
+            print(f"Error reading config: {e}")
+            return jsonify({'config': ''})
     else:
         data = request.get_json() or {}
         cfg = data.get('config', '')

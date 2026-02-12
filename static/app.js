@@ -133,6 +133,10 @@ function renderGraph(graph) {
 
 async function loadAll() {
   const cfgResp = await fetchConfig();
+  if (cfgResp.config == undefined || cfgResp.config == "") {
+    alert('No config found. Please ensure haproxy.cfg is mounted correctly and contains valid configuration.');
+    return
+  }
   document.getElementById('cfg').value = cfgResp.config || '';
   const graph = await fetchGraph();
   renderGraph(graph);
@@ -159,7 +163,6 @@ function setEditorVisible(visible) {
   ed.style.display = visible ? 'flex' : 'none';
   const btn = document.getElementById('toggle-config');
   if (btn) btn.textContent = visible ? 'Hide config' : 'Show config';
-  try { localStorage.setItem('haproxy_gui_editor_visible', visible ? '1' : '0'); } catch (e) { }
 }
 
 document.getElementById('toggle-config').addEventListener('click', () => {
@@ -168,10 +171,5 @@ document.getElementById('toggle-config').addEventListener('click', () => {
   setEditorVisible(!currentlyVisible);
 });
 
-// initialize editor visibility from localStorage then load
-try {
-  const v = localStorage.getItem('haproxy_gui_editor_visible');
-  if (v === '0') setEditorVisible(false);
-  else setEditorVisible(true);
-} catch (e) { }
+setEditorVisible(false); // start with editor hidden
 loadAll().catch(err => console.error(err));
