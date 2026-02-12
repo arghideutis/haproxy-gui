@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 app:app --workers 3
+    volumes:
+      # - ./:/app
+      # Mount host auth files so PAM inside the container can validate host accounts.
+      # WARNING: this exposes sensitive host files to the container. Use with extreme caution.
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - /etc/shadow:/etc/shadow:ro
+      - /etc/pam.d:/etc/pam.d:ro
+      - /etc/nsswitch.conf:/etc/nsswitch.conf:ro
+      - ./haproxy.cfg:/app/haproxy.cfg
+    expose:
+      - "8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "8085:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./static:/app/static:ro
+    depends_on:
+      - web

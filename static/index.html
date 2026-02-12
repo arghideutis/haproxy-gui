@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>HAProxy GUI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/static/style.css">
+  <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+</head>
+
+<body>
+  <div class="menu-bar">
+    <div class="menu-title">HAProxy GUI</div>
+    <div class="menu-actions">
+      <button id="toggle-config">Hide config</button>
+    </div>
+  </div>
+  <div id="container">
+    <div id="graph"></div>
+    <div id="editor">
+      <div class="editor-header">
+        <h3>haproxy.cfg</h3>
+        <div>
+          <button id="reload">Reload</button>
+          <button id="save">Save</button>
+        </div>
+      </div>
+      <textarea id="cfg" spellcheck="false"></textarea>
+    </div>
+  </div>
+  <div id="minimap" title="Mini map"></div>
+  <script src="/static/app.js"></script>
+</body>
+
+</html>
