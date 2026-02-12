@@ -27,7 +27,8 @@ def config():
         return _unauthorized()
     if request.method == 'GET':
         if not os.path.exists(CONFIG_PATH):
-            open(CONFIG_PATH, 'w').close()
+            # open(CONFIG_PATH, 'w').close()
+            return jsonify()
         with open(CONFIG_PATH, 'r') as f:
             return jsonify({'config': f.read()})
     else:

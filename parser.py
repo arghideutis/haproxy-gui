@@ -84,14 +84,17 @@ def parse_haproxy_config(cfg):
                 # If there's a condition, try to link via ACLs as well
                 if cond:
                     tokens = re.findall(r"[A-Za-z0-9_:-]+", cond)
+                    added = False
                     for t in tokens:
                         if t in acl_defs:
+                            added = True
                             edges.append({'from': f'frontend::{fname}', 'to': f'acl::{t}'})
                             edges.append({'from': f'acl::{t}', 'to': f'backend::{b}'})
                     # also add a direct dashed/labelled edge from frontend -> backend for visibility
                     # print(cond)
                     # edges.append({'from': f'frontend::{fname}', 'to': f'backend::{b}', 'label': cond, 'dashes': True})
-                    edges.append({'from': f'frontend::{fname}', 'to': f'backend::{b}', 'label': 'acl', 'dashes': True})
+                    if not added:
+                        edges.append({'from': f'frontend::{fname}', 'to': f'backend::{b}', 'label': 'acl', 'dashes': True})
                 else:
                     # unconditional direct edge
                     edges.append({'from': f'frontend::{fname}', 'to': f'backend::{b}'})

@@ -13,7 +13,7 @@ services:
       - /etc/shadow:/etc/shadow:ro
       - /etc/pam.d:/etc/pam.d:ro
       - /etc/nsswitch.conf:/etc/nsswitch.conf:ro
-      - ./haproxy.cfg:/app/haproxy.cfg
+      - /etc/haproxy/haproxy.cfg:/app/haproxy.cfg
     expose:
       - "8000"
     environment:

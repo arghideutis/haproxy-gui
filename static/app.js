@@ -146,8 +146,7 @@ document.getElementById('save').addEventListener('click', async () => {
   const cfg = document.getElementById('cfg').value;
   const res = await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ config: cfg }) });
   if (res.ok) {
-    await loadAll();
-    //alert('Saved');
+    window.location.reload()
   } else {
     alert('Save failed');
   }
