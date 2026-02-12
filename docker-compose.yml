@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   web:
+    image: ghcr.io/arghideutis/haproxy-gui:latest
     build: .
     command: gunicorn --bind 0.0.0.0:8000 app:app --workers 3
     volumes:
